@@ -97,7 +97,7 @@
 					</ul>
 				</ul>
 			</section>
-			
+
 			<section>
 				<h1>Introduction to Django</h1>
 				<h2>Prerequisites</h2>
@@ -203,20 +203,21 @@ if os.environ['PATH_INFO'] == '/':
 					<li>Not modular</li>
 					<li>Mixes HTML, SQL, CSS, JavaScript, Python</li>
 				</ul>
-				
+
 			</section>
-			
+
 			<section>
 				<h1>CGI vs Django</h1>
-				<img src="img/cgi.png" class="left" style="width:60%; border-right:1px dashed #bbb;"/>
-				<img src="img/folder_struct.png" class="left" style="width:35%" />				
+				<img src="img/cgi.png" class="left"
+					style="width: 60%; border-right: 1px dashed #bbb;" /> <img
+					src="img/folder_struct.png" class="left" style="width: 35%" />
 			</section>
 
 			<!-- Example of nested vertical slides -->
 			<section>
 				<section>
 					<h1>now let's stop with the bla bla bla..</h1>
-					<img alt="" src="img/death_pp.jpg" s/>
+					<img alt="" src="img/death_pp.jpg" s />
 				</section>
 				<section>
 					<h1>and let's tango with Django!</h1>
@@ -226,11 +227,10 @@ if os.environ['PATH_INFO'] == '/':
 
 			<section>
 				<section>
-				<h1>CTU: initial specification</h1>
-				<h2>
-					In this first practical we'll create a basic but fully functional Django app 
-					to manage studies run by a ficticious Clinical Trials Unit.
-				</h2>
+					<h1>CTU: initial specification</h1>
+					<h2>In this first practical we'll create a basic but fully
+						functional Django app to manage studies run by a ficticious
+						Clinical Trials Unit.</h2>
 				</section>
 				<section>
 					<h1>Getting started</h1>
@@ -242,7 +242,8 @@ if os.environ['PATH_INFO'] == '/':
 Start > All Programs > eclipse
 							</code>
 						</pre>
-						<li>Create a workspace on the C: drive for your Python projects:</li>
+						<li>Create a workspace on the C: drive for your Python
+							projects:</li>
 						<pre>
 							<code>
 File &gt; Switch Workspace &gt; Other...
@@ -256,44 +257,237 @@ Window > Preferences > PyDev > Interpreters - Python Interpreter > Quick Auto Co
 							</code>
 						</pre>
 						<li>Close the welcome screen</li>
+						<aside class="notes">The Django web server is set to
+							--noreload by default .This means you’ll have to restart it
+							whenever you change your code unless you change the configuration
+							(ask us). If you want to keep the code that you write during the
+							practical then you’ll need to copy your workspace onto your
+							network drive at the end</aside>
+					</ol>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h1>Creating your Django project</h1>
+					<ol>
+						<li>Create an empty project</li>
+						<pre>
+							<code>
+File > New > Other...
+PyDev > PyDev Django Project > Next
+Project name: CTU
+Next > Next > Database settings > username: &lt;your username&gt; password: admin
+Yes
+							</code>
+						</pre>
+						<li>Create a main app:</li>
+						<pre>
+							<code>
+CTU (right-click) > Django > Create application
+"main" > OK
+							</code>
+						</pre>
+						<li>Migrate the database:</li>
+						<pre>
+							<code>
+CTU (right-click) > Django > Migrate
+							</code>
+						</pre>
+					</ol>
+				</section>
+
+				<section>
+					<h1>Creating your Django project</h1>
+					<ol start="4">
+						<li>Register your app in CTU/CTU/<i>settings.py</i></li>
+						<pre>
+							<code>
+Add 'main' to INSTALLED_APPS
+							</code>
+						</pre>
+						<li>Make sure your server works:</li>
+						<pre>
+							<code>
+CTU (right-click) > Run as > 1. PyDev:Django
+							</code>
+						</pre>
+						<li>visit the page <a href="http://localhost:8000/"
+							target=_blank>localhost:8000</a></li>
+					</ol>
+					<img alt="django-dev-server-firstrun"
+						src="img/django-dev-server-firstrun.png">
+				</section>
+
+			</section>
+
+			<section>
+				<h1>Creating a view</h1>
+				<ol>
+					<li>open CTU/main/<i>views.py</i> and copy-paste this piece of
+						code:
+					</li>
+					<pre>
+							<code class="python">
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse(&quot;&lt;h1&gt;'main' says hey there world!&lt;/h1&gt;&quot;)
+							</code>
+						</pre>
+				</ol>
+				<aside class="notes">
+					We first import the HttpResponse object from the django.http
+					module.<br> Each view exists within the views.py file as a
+					series of individual functions. In this instance, we only created
+					one view - called index.<br> Each view takes in at least one
+					argument - a HttpRequest object, which also lives in the
+					django.http module. Convention dictates that this is named request,
+					but you can rename this to whatever you want if you so desire.<br>
+					Each view must return a HttpResponse object. A simple HttpResponse
+					object takes a string parameter representing the content of the
+					page we wish to send to the client requesting the view.<br>
+				</aside>
+			</section>
+
+			<section>
+				<section>
+					<h1>Mapping URLs</h1>
+					<ol>
+						<li>add a new <i>urls.py</i> for better modularization:
+						</li>
+						<pre>
+							<code class="python">
+main(right click) > New > File > urls.py
+							</code>
+					</pre>
+						<li>copy-paste in the newly generated file:</li>
+						<pre>
+							<code class="python">
+from django.conf.urls import patterns, url
+from main import views
+
+urlpatterns = patterns('',
+        url(r'^$', views.index, name='index'))
+							</code>
+						</pre>
+						<li>add this line in CTU/CTU/<i>urls.py</i>:
+						</li>
+						<pre>
+							<code class="python">
+url(r'^main/', include('main.urls')),
+							</code>
+						</pre>
+					</ol>
+					<aside class="notes"></aside>
+				</section>
+				<section>
+					<ol start="4">
+						<li>verify that everything works fine..</li>
+						<a href="http://localhost:8000/main/" target=_blank>localhost:8000/main/</a>
+					</ol>
+					<img alt="" src="img/hello_world.png">
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h1>we can do better: templating</h1>
+					<ol>
+						<li>create templates folder</li>
+						<pre>
+							<code>
+CTU (right click) > New > Folder > Folder name: templates/main
+							</code>
+						</pre>
+						<li>add these lines in CTU/CTU/<i>settings.py</i> (somewhere
+							under BASE_DIR)
+						</li>
+						<pre>
+							<code>
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
+
+TEMPLATE_DIRS = [
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    TEMPLATE_PATH,
+]
+							</code>
+						</pre>
+						<aside class="notes"></aside>
+					</ol>
+				</section>
+				<section>
+					<ol start=3>
+						<li>create a new file called <i>index.html</i> under
+							CTU/templates/main
+						</li>
+						<li>copy-paste this snipplet in the newly generated file</li>
+						<pre>
+							<code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+    &lt;head&gt;
+        &lt;title&gt;CTU&lt;/title&gt;
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;h1&gt;CTU main app says...&lt;/h1&gt;
+        hello world! &lt;strong&gt;{{ boldmessage }}&lt;/strong&gt;&lt;br /&gt;
+    &lt;/body&gt;
+
+&lt;/html&gt;
+							</code>
+						</pre>
+						<aside class="notes"></aside>
+					</ol>
+				</section>
+				<section>
+					<ol start=5>
+						<li>add this import to the CTU/main/<i>views.py</i>
+						</li>
+						<pre>
+							<code>
+from django.shortcuts import render
+							</code>
+						</pre>
+						<li>modify the <i>index()</i> method as follows
+						</li>
+						<pre>
+							<code>
+def index(request):
+
+    teacher = 'Filippo'
+    # Construct a dictionary to pass to the template engine as its context.
+    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
+    context_dict = {'boldmessage': "%s taught me how to inject dynamic content in templates!" % teacher }
+
+    # Return a rendered response to send to the client.
+    # We make use of the shortcut function to make our lives easier.
+    # Note that the first parameter is the template we wish to use.
+    return render(request, 'main/index.html', context_dict)
+							</code>
+						</pre>
+						<aside class="notes"></aside>
+						<li>check everything by reloading <a
+							href="http://localhost:8000/main/" target=_blank>localhost:8000/main/</a></li>
 					</ol>
 				</section>
 			</section>
 
 			<section>
-				<h2>Point of View</h2>
-				<p>
-					Press <strong>ESC</strong> to enter the slide overview.
-				</p>
-				<p>
-					Hold down alt and click on any element to zoom in on it using <a
-						href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click
-					anywhere to zoom back out.
-				</p>
-			</section>
-
-			<section>
-				<h2>Touch Optimized</h2>
-				<p>Presentations look great on touch devices, like mobile phones
-					and tablets. Simply swipe through your slides.</p>
-			</section>
-
-			<section data-markdown>
-				<script type="text/template">
-					## Markdown support
-
-					Write content using inline or external Markdown.
-						Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-
-						```
-						<section data-markdown>
-						## Markdown support
-
-						Write content using inline or external Markdown.
-						  Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-						  </section>
-						  ```
-						  </script>
+				<h1>Serving static assets</h1>
+				<ol>
+					<li>create static folder</li>
+					<pre>
+							<code>
+CTU (right click) > New > Folder > Folder name: templates/main
+							</code>
+						</pre>
+					<li>add these lines in CTU/CTU/<i>settings.py</i> (somewhere
+						under BASE_DIR)
+					</li>
+				</ol>
 			</section>
 
 			<section>
