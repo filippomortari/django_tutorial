@@ -287,12 +287,7 @@ CTU (right-click) > Django > Create application
 "main" > OK
 							</code>
 						</pre>
-						<li>Migrate the database:</li>
-						<pre>
-							<code>
-CTU (right-click) > Django > Migrate
-							</code>
-						</pre>
+
 					</ol>
 				</section>
 
@@ -421,7 +416,7 @@ TEMPLATE_DIRS = [
 						<li>create a new file called <i>index.html</i> under
 							CTU/templates/main
 						</li>
-						<li>copy-paste this snipplet in the newly generated file</li>
+						<li>copy-paste this snippet in the newly generated file</li>
 						<pre>
 							<code>
 &lt;!DOCTYPE html&gt;
@@ -474,343 +469,442 @@ def index(request):
 					</ol>
 				</section>
 			</section>
-
 			<section>
-				<h1>Serving static assets</h1>
-				<ol>
-					<li>create static folder</li>
-					<pre>
+				<section>
+					<h1>Serving static assets</h1>
+					<ol>
+						<li>create static folder</li>
+						<pre>
 							<code>
-CTU (right click) > New > Folder > Folder name: templates/main
+CTU (right click) > New > Folder > Folder name: static/img
 							</code>
 						</pre>
-					<li>add these lines in CTU/CTU/<i>settings.py</i> (somewhere
-						under BASE_DIR)
-					</li>
-				</ol>
-			</section>
+						<li>add these lines in CTU/CTU/<i>settings.py</i> (somewhere
+							under BASE_DIR)
+						</li>
+						<pre>
+							<code>
+STATIC_URL = '/static/'
 
-			<section>
-				<section id="fragments">
-					<h2>Fragments</h2>
-					<p>Hit the next arrow...</p>
-					<p class="fragment">... to step through ...</p>
-					<p>
-						<span class="fragment">... a</span> <span class="fragment">fragmented</span>
-						<span class="fragment">slide.</span>
-					</p>
+STATIC_PATH = os.path.join(BASE_DIR,'static')
 
-					<aside class="notes">This slide has fragments which are
-						also stepped through in the notes window.</aside>
+STATICFILES_DIRS = (
+    STATIC_PATH,
+)
+							</code>
+						</pre>
+						<aside class="notes">You’ve typed in some code, but what
+							does it represent? The first variable STATIC_URL defines the base
+							URL with which your Django applications will find static media
+							files when the server is running. For example, when running the
+							Django development server with STATIC_URL set to /static/ like in
+							the code example above, static media will be available at
+							http://127.0.0.1:8000/static/. The official documentation on
+							serving up static media warns that it is vitally important to
+							make sure that those slashes are there. Not configuring this
+							problem can lead to a world of pain. While STATIC_URL defines the
+							URL to access media via the web server, STATICFILES_DIRS allows
+							you to specify the location of the newly created static directory
+							on your local disk. Just like the TEMPLATE_DIRS tuple,
+							STATICFILES_DIRS requires an absolute path to the static
+							directory. Here, we re-used the BASE_DIR defined in Section 5.1
+							to create the STATIC_PATH.</aside>
+						<li>drop <a href="img/clinical_trials.png" target=_blank>this
+								image</a> into CTU/static/img folder
+						</li>
+					</ol>
 				</section>
 				<section>
-					<h2>Fragment Styles</h2>
-					<p>There's different types of fragments, like:</p>
-					<p class="fragment grow">grow</p>
-					<p class="fragment shrink">shrink</p>
-					<p class="fragment roll-in">roll-in</p>
-					<p class="fragment fade-out">fade-out</p>
-					<p class="fragment current-visible">current-visible</p>
-					<p class="fragment highlight-red">highlight-red</p>
-					<p class="fragment highlight-blue">highlight-blue</p>
-				</section>
-			</section>
-
-			<section id="transitions">
-				<h2>Transition Styles</h2>
-				<p>
-					You can select from different transitions, like: <br> <a
-						href="?transition=none#/transitions">None</a> - <a
-						href="?transition=fade#/transitions">Fade</a> - <a
-						href="?transition=slide#/transitions">Slide</a> - <a
-						href="?transition=convex#/transitions">Convex</a> - <a
-						href="?transition=concave#/transitions">Concave</a> - <a
-						href="?transition=zoom#/transitions">Zoom</a>
-				</p>
-			</section>
-
-			<section id="themes">
-				<h2>Themes</h2>
-				<p>
-					reveal.js comes with a few themes built in: <br>
-					<!-- Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. -->
-					<a href="#"
-						onclick="document.getElementById('theme').setAttribute('href','css/theme/black.css'); return false;">Black
-						(default)</a> - <a href="#"
-						onclick="document.getElementById('theme').setAttribute('href','css/theme/white.css'); return false;">White</a>
-					- <a href="#"
-						onclick="document.getElementById('theme').setAttribute('href','css/theme/league.css'); return false;">League</a>
-					- <a href="#"
-						onclick="document.getElementById('theme').setAttribute('href','css/theme/sky.css'); return false;">Sky</a>
-					- <a href="#"
-						onclick="document.getElementById('theme').setAttribute('href','css/theme/beige.css'); return false;">Beige</a>
-					- <a href="#"
-						onclick="document.getElementById('theme').setAttribute('href','css/theme/simple.css'); return false;">Simple</a>
-					<br> <a href="#"
-						onclick="document.getElementById('theme').setAttribute('href','css/theme/serif.css'); return false;">Serif</a>
-					- <a href="#"
-						onclick="document.getElementById('theme').setAttribute('href','css/theme/night.css'); return false;">Night</a>
-					- <a href="#"
-						onclick="document.getElementById('theme').setAttribute('href','css/theme/moon.css'); return false;">Moon</a>
-					- <a href="#"
-						onclick="document.getElementById('theme').setAttribute('href','css/theme/solarized.css'); return false;">Solarized</a>
-				</p>
-			</section>
-
-			<section>
-				<section data-background="#dddddd">
-					<h2>Slide Backgrounds</h2>
-					<p>
-						Set
-						<code>data-background="#dddddd"</code>
-						on a slide to change the background color. All CSS color formats
-						are supported.
-					</p>
-					<a href="#" class="navigate-down"> <img width="178"
-						height="238"
-						data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png"
-						alt="Down arrow">
-					</a>
-				</section>
-				<section
-					data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">
-					<h2>Image Backgrounds</h2>
-					<pre>
-						<code>&lt;section data-background="image.png"&gt;</code>
-					</pre>
-				</section>
-				<section
-					data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png"
-					data-background-repeat="repeat" data-background-size="100px">
-					<h2>Tiled Backgrounds</h2>
-					<pre>
-						<code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code>
-					</pre>
-				</section>
-				<section
-					data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm"
-					data-background-color="#000000">
-					<div
-						style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
-						<h2>Video Backgrounds</h2>
+					<ol start=4>
+						<li>modify CTU/templates/main/<i>index.html</i> as follows
+						</li>
 						<pre>
-							<code style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code>
+							<code>
+&lt;!DOCTYPE html&gt;
+
+{% load staticfiles %} &lt;!-- New line --&gt;
+
+&lt;html&gt;
+
+    &lt;head&gt;
+        &lt;title&gt;CTU&lt;/title&gt;
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;h1&gt;CTU main app says...&lt;/h1&gt;
+        hello world! &lt;strong&gt;{{ boldmessage }}&lt;/strong&gt;&lt;br /&gt;
+        &lt;img src=&quot;{% static &quot;img/clinical_trials.png&quot; %}&quot; alt=&quot;Picture of ctu&quot; /&gt; &lt;!-- New line --&gt;
+    &lt;/body&gt;
+
+&lt;/html&gt;
+							</code>
 						</pre>
+						<li>hopefully <a href="http://localhost:8000/main/"
+							target=_blank>localhost:8000/main/</a> contains an image...
+						</li>
+					</ol>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h1>Models and databases</h1>
+					<img src="img/chris.jpg" alt="chris" style="width: 25%;"
+						class="left" />
+					<div class="left"
+						style="width: 50%; margin-left: 3%; margin-top: 1%;">
+						<h3>
+							THE MAN taught you how to master both
+							<ul style="font-size: 0.9em; font-weight: 600;">
+								<li>Object Oriented Design</li>
+								<li>Relational Database Schema Design</li>
+							</ul>
+						</h3>
+						<img src="img/orm.gif" />
+						<h3>two different worlds that complement each other</h3>
 					</div>
 				</section>
-			</section>
+				<section>
+					<h1>Models and databases</h1>
+					<img src="img/orm2.jpg" alt="orm" style="width: 30%;" class="left" />
+					<div class="left"
+						style="width: 60%; margin-left: 3%; margin-top: 1%;">
+						<ul>
+							<li>but you just want to design your object model and assume
+								that "somehow" your modifications will be cascaded to your
+								relational schema...</li>
+							<li>Modern web frameworks come with <a
+								href="http://en.wikipedia.org/wiki/Object-relational_mapping"
+								target=_blank>Object Relational Mapping</a> off the shelf
+							</li>
+							<li>ORM is cool because:</li>
+							<ul>
+								<li>Changes to the object model are made in one place</li>
+								<li>Huge reduction in code</li>
+								<li>Provides an object oriented query language</li>
+								<li>Navigation. You can navigate object relationships
+									transparently. Related objects are automatically loaded as
+									needed.</li>
+								<li>You can easily plug and unplug different databases
+									(e.g. Postgres, MySql, etc.. etc..)</li>
+							</ul>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<h1>Models and databases</h1>
+					<h2>our very simple model with One-to-many relationship</h2>
+					<img alt="" src="img/model.png" />
+					<ol>
+						<li>dont forget to migrate the database:</li>
+						<pre>
+							<code>
+CTU (right-click) > Django > Migrate
+							</code>
+						</pre>
+						<li>create a superuser (from command promt run this from the
+							root folder CTU):</li>
+						<pre>
+							<code>
+H:\users\whatever...\CTU> python manage.py createsuperuser
+							</code>
+						</pre>
+					</ol>
+				</section>
+				<section>
+					<h1>Creating Models</h1>
+					<ol start=3>
+						<li>open CTU/main/models.py and copy-paste this snippet</li>
+						<pre>
+							<code>
+class Study(models.Model):
+    name = models.CharField(max_length=200)
+    startDate = models.DateField()
+    
+    def __unicode__(self):  #For Python 2, use __str__ on Python 3
+        return self.name
+    
+class Patient(models.Model):
+    firstName = models.CharField(max_length=200)
+    lastName = models.CharField(max_length=200)
+    study = models.ForeignKey(Study)
+    
+    def __unicode__(self):  #For Python 2, use __str__ on Python 3
+        return self.firstName + self.lastName
+							</code>
+						</pre>
+						<li>you changed your models, now make the migrations</li>
+						<pre>
+							<code>
+CTU (right-click) > Django > Make migrations > type main
+							</code>
+						</pre>
+					</ol>
+				</section>
+				<section>
+					<h1>Creating Models</h1>
+					<ol start=5>
+						<li>and apply the migrations (this will automatically modify
+							your schema accordingly, FTW!):</li>
+						<pre>
+							<code>
+CTU (right-click) > Django > Migrate
+							</code>
+						</pre>
+						<li>copy <a href="populate_main.py" target=_blank>this
+								populating script</a> in the root folder of your project and execute
+							it:
+						</li>
+						<pre>
+							<code>
+H:\users\whatever...\CTU> python populate_main.py
+							</code>
+						</pre>
+					</ol>
+				</section>
+				<section>
+					<h1>Creating Models</h1>
+					<h2>Let's verify it worked..</h2>
+					<ol>
+						<li>let's change the code in CTU/main/<i>views.py</i>
+						</li>
+						<pre>
+							<code>
+from django.shortcuts import render
+from django.http import HttpResponse
+from main.models import Study
 
-			<section data-transition="slide" data-background="#4d7e65"
-				data-background-transition="zoom">
-				<h2>Background Transitions</h2>
-				<p>Different background transitions are available via the
-					backgroundTransition option. This one's called "zoom".</p>
-				<pre>
-					<code>Reveal.configure({ backgroundTransition: 'zoom' })</code>
-				</pre>
-			</section>
+def index(request):
 
-			<section data-transition="slide" data-background="#b5533c"
-				data-background-transition="zoom">
-				<h2>Background Transitions</h2>
-				<p>You can override background transitions per-slide.</p>
-				<pre>
-					<code style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code>
-				</pre>
+    teacher = 'Filippo'
+    study_list = Study.objects.all()
+    context_dict = {'boldmessage': "%s taught me how to inject dynamic content in templates!" % teacher , 'studies':study_list}
+    return render(request, 'main/index.html', context_dict)
+							</code>
+						</pre>
+
+					</ol>
+				</section>
+				<section>
+					<ol start=2>
+						<li>and the CTU/templates/main/<i>index.html</i> :
+						</li>
+						<pre>
+							<code>
+&lt;!DOCTYPE html&gt;
+
+{% load staticfiles %}
+&lt;!-- New line --&gt;
+
+&lt;html&gt;
+
+&lt;head&gt;
+&lt;title&gt;CTU&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+	&lt;h1&gt;CTU main app says...&lt;/h1&gt;
+	hello world!
+	&lt;strong&gt;{{ boldmessage }}&lt;/strong&gt;
+	&lt;br /&gt;&lt;br /&gt;
+	{% if studies %}
+	&lt;table&gt;
+		&lt;tr&gt;
+			&lt;th&gt;Study&lt;/th&gt;
+		&lt;/tr&gt;
+		{% for study in studies %}
+		&lt;tr&gt;
+			&lt;td&gt;{{ study.name }} &lt;/td&gt;
+		&lt;/tr&gt;
+		{% endfor %}
+	&lt;/table&gt;
+	
+	{% else %}
+	&lt;strong&gt;There are no studies present.&lt;/strong&gt; {% endif %}
+&lt;/body&gt;
+
+&lt;/html&gt;
+							</code>
+						</pre>
+					</ol>
+					<ul>
+						<li>more info about Model DataTypes and Objects relationships
+							<a href="https://docs.djangoproject.com/en/1.7/topics/db/models/"
+							target=_blank>here</a>
+						</li>
+					</ul>
+				</section>
 			</section>
 
 			<section>
-				<h2>Pretty Code</h2>
-				<pre>
-					<code data-trim contenteditable>
-								function linkify( selector ) {
-								if( supports3DTransforms ) {
+				<section>
+					<h1>Let's create a page that lists all of the patients under a
+						study</h1>
+					<ol>
+						<li>replace the line that prints the study in
+							CTU/templates/index.html</li>
+						<pre>
+					<code>
+&lt;td&gt;&lt;a href=&quot;study/{{ study.pk }}&quot;&gt;{{ study.name }} &lt;/a&gt;&lt;/td&gt;
+					</code>
+					</pre>
+						<li>modify the url regex in CTU/main/<i>urls.py</i>: <pre>
+						<code>
+urlpatterns = patterns('',
+        url(r'^$', views.index, name='index'),
+        url(r'^study/(?P&lt;studyID&gt;\d+)/$', views.study, name='study'),) # add this line
+						</code>
+					</pre>
+					</ol>
+				</section>
+				<section>
+					<ol start=3>
+						<li>add a new method in CTU/main/<i>views.py</i>:</li>
+						<pre>
+						<code>
+def study(request, studyID):
+    
+    results = {}
+    
+    try:
+        study = Study.objects.get(pk=studyID)
+        patients = Patient.objects.filter(study=study)
+        
+        results['studyName'] = study.name
+        results['patients'] = patients
+        results['study'] = study
+        
+        
+    except Study.DoesNotExist:
+        pass
+    
+    return render(request, 'main/study.html', results)
+						</code>
+						</pre>
+					</ol>
+				</section>
+				<section>
+					<ol start=4>
+						<li>create a new template called <i>study.html</i> and place it in CTU/templates/main:</li>
+						<pre>
+						<code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Rango&lt;/title&gt;
+    &lt;/head&gt;
 
-								var nodes = document.querySelectorAll( selector );
-
-								for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-								var node = nodes[i];
-
-								if( !node.className ) {
-								node.className += ' roll';
-							}
-						}
-					}
-				}
-			</code>
-				</pre>
-				<p>
-					Code syntax highlighting courtesy of <a
-						href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.
-				</p>
-			</section>
-
-			<section>
-				<h2>Marvelous List</h2>
-				<ul>
-					<li>No order here</li>
-					<li>Or here</li>
-					<li>Or here</li>
-					<li>Or here</li>
-				</ul>
-			</section>
-
-			<section>
-				<h2>Fantastic Ordered List</h2>
-				<ol>
-					<li>One is smaller than...</li>
-					<li>Two is smaller than...</li>
-					<li>Three!</li>
+    &lt;body&gt;
+        &lt;h1&gt;{{ studyName }}&lt;/h1&gt;
+        {% if study %}
+            {% if patients %}
+            &lt;ul&gt;
+                {% for patient in patients %}
+                &lt;li&gt;{{ patient }}&lt;/li&gt;
+                {% endfor %}
+            &lt;/ul&gt;
+            {% else %}
+                &lt;strong&gt;No patients currently under this study.&lt;/strong&gt;
+            {% endif %}
+        {% else %}
+            The specified study {{ studyName }} does not exist!
+        {% endif %}
+    &lt;/body&gt;
+&lt;/html&gt;
+						</code>
+						</pre>
+					</ol>
+				</section>
+				<section>
+				<ol start=5>
+					<li>you should be able to see urls that match study IDs by mouse-hovering the links in <a href="http://localhost:8000/main/" target=_blank>localhost:8000/main/</a></li>
 				</ol>
+					<img alt="" src="img/new_links.png" />
+					
+				</section>
 			</section>
-
+			
 			<section>
-				<h2>Tabular Tables</h2>
-				<table>
-					<thead>
-						<tr>
-							<th>Item</th>
-							<th>Value</th>
-							<th>Quantity</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Apples</td>
-							<td>$1</td>
-							<td>7</td>
-						<tr>
-						<tr>
-							<td>Lemonade</td>
-							<td>$2</td>
-							<td>18</td>
-						<tr>
-						<tr>
-							<td>Bread</td>
-							<td>$3</td>
-							<td>2</td>
-						<tr>
-					</tbody>
-				</table>
-			</section>
+				<section>
+					<h2>Too much code duplication in the templates? No probs</h2>
+					<h1>Template Inheritance</h1>
+				</section>
+				<section>
+					<ol>
+						<li>Add this file called <i>base.html</i> in CTU/templates/main</li>
+						<pre>
+							<code>
+&lt;!DOCTYPE html&gt;
 
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;CTU - {% block title %}How to Tango with Django!{% endblock %}&lt;/title&gt;
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;div&gt;
+            {% block body_block %}{% endblock %}
+        &lt;/div&gt;
+
+        &lt;hr /&gt;
+
+        &lt;div&gt;
+            &lt;p style=&quot;font-size:10px; color:red; font-weight:bold;&quot;&gt;All rights reserved -- CTU Inc.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;							
+							</code>
+						</pre>
+					</ol>
+				</section>
+				<section>
+					<ol start="2">
+						<li>As a proof of concept lets slightly modify the <i>index.html</i></li>
+						<pre>
+							<code>
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+
+
+{% block title %} Homepage{% endblock %}
+{% block body_block %}
+	&lt;h1&gt;CTU main app says...&lt;/h1&gt;
+	hello world!
+	&lt;strong&gt;{{ boldmessage }}&lt;/strong&gt;
+	&lt;br /&gt;&lt;br /&gt;
+	{% if studies %}
+	&lt;table&gt;
+		&lt;tr&gt;
+			&lt;th&gt;Study&lt;/th&gt;
+		&lt;/tr&gt;
+		{% for study in studies %}
+		&lt;tr&gt;
+			&lt;td&gt;&lt;a href=&quot;study/{{ study.pk }}&quot;&gt;{{ study.name }} &lt;/a&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		{% endfor %}
+	&lt;/table&gt;
+	
+	{% else %}
+	&lt;strong&gt;There are no studies present.&lt;/strong&gt; {% endif %}
+
+{% endblock %}							
+							</code>
+						</pre>
+					</ol>
+				</section>
+			</section>
+			
 			<section>
-				<h2>Clever Quotes</h2>
-				<p>
-					These guys come in two forms, inline: <q
-						cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to
-						choose from&rdquo;</q> and block:
-				</p>
-				<blockquote
-					cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-					&ldquo;For years there has been a theory that millions of monkeys
-					typing at random on millions of typewriters would reproduce the
-					entire works of Shakespeare. The Internet has proven this theory to
-					be untrue.&rdquo;</blockquote>
-			</section>
-
-			<section>
-				<h2>Intergalactic Interconnections</h2>
-				<p>
-					You can link between slides internally, <a href="#/2/3">like
-						this</a>.
-				</p>
-			</section>
-
-			<section>
-				<h2>Speaker View</h2>
-				<p>
-					There's a <a
-						href="https://github.com/hakimel/reveal.js#speaker-notes">speaker
-						view</a>. It includes a timer, preview of the upcoming slide as well
-					as your speaker notes.
-				</p>
-				<p>
-					Press the <em>S</em> key to try it out.
-				</p>
-
-				<aside class="notes">Oh hey, these are some notes. They'll
-					be hidden in your presentation, but you can see them if you open
-					the speaker notes window (hit 's' on your keyboard).</aside>
-			</section>
-
-			<section>
-				<h2>Export to PDF</h2>
-				<p>
-					Presentations can be <a
-						href="https://github.com/hakimel/reveal.js#pdf-export">exported
-						to PDF</a>, here's an example:
-				</p>
-				<iframe src="//www.slideshare.net/slideshow/embed_code/42840540"
-					width="445" height="355" frameborder="0" marginwidth="0"
-					marginheight="0" scrolling="no"
-					style="border: 3px solid #666; margin-bottom: 5px; max-width: 100%;"
-					allowfullscreen> </iframe>
-			</section>
-
-			<section>
-				<h2>Global State</h2>
-				<p>
-					Set
-					<code>data-state="something"</code>
-					on a slide and
-					<code>"something"</code>
-					will be added as a class to the document element when the slide is
-					open. This lets you apply broader style changes, like switching the
-					page background.
-				</p>
-			</section>
-
-			<section data-state="customevent">
-				<h2>State Events</h2>
-				<p>
-					Additionally custom events can be triggered on a per slide basis by
-					binding to the
-					<code>data-state</code>
-					name.
-				</p>
-				<pre>
-					<code class="javascript" data-trim contenteditable
-						style="font-size: 18px;">
-										Reveal.addEventListener( 'customevent', function() {
-										console.log( '"customevent" has fired' );
-									} );
-								</code>
-				</pre>
-			</section>
-
-			<section>
-				<h2>Take a Moment</h2>
-				<p>Press B or . on your keyboard to pause the presentation. This
-					is helpful when you're on stage and want to take distracting slides
-					off the screen.</p>
-			</section>
-
-			<section>
-				<h2>Much more</h2>
+				<h1>Left to you...</h1>
 				<ul>
-					<li>Right-to-left support</li>
-					<li><a href="https://github.com/hakimel/reveal.js#api">Extensive
-							JavaScript API</a></li>
-					<li><a
-						href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
-					<li><a
-						href="https://github.com/hakimel/reveal.js#parallax-background">Parallax
-							backgrounds</a></li>
-					<li><a
-						href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom
-							keyboard bindings</a></li>
+					<li>Try to add a page that embeds a form for creating new studies...</li>
 				</ul>
 			</section>
+
+			
 
 			<section style="text-align: left;">
-				<h1>THE END</h1>
-				<p>
-					- <a href="http://slides.com">Try the online editor</a> <br> -
-					<a href="https://github.com/hakimel/reveal.js">Source code
-						&amp; documentation</a>
-				</p>
+				<h1>The end</h1>
+				<h2>Questions?</h2>
 			</section>
 
 		</div>
