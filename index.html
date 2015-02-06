@@ -897,6 +897,15 @@ def study(request, studyID):
 				<h1>Left to you...</h1>
 				<ul>
 					<li>Try to add a page that embeds a form for creating new studies...</li>
+					<li>Hints:</li>
+					<ul>
+						<li>Take a look at how Django handles <a href=https://docs.djangoproject.com/en/1.7/topics/forms/" target=_blank>forms</a></li>
+						<li>create a <i>forms.py</i> file under CTU/main in order to maintain <i>views.py</i> clean</li>
+						<li>create a new method called <i>add_study()</i> in <i>views.py</i> for handling the form </li>
+						<li>create a template for the form</li>
+						<li>map the view <i>add_study()</i> in <i>main/urls.py</i> </li>
+						<li>create a link in the <i>index.html</i> for the new page</li>
+					</ul>
 				</ul>
 			</section>
 
@@ -904,7 +913,9 @@ def study(request, studyID):
 
 			<section style="text-align: left;">
 				<h1>The end</h1>
-				<h2>Questions?</h2>
+				<h2><i>“and then we emerged to see the stars again”</i> - Dante</h2>
+				<br />
+				<h3 style="font-size:1.7em;">Questions?</h3>
 			</section>
 
 		</div>
